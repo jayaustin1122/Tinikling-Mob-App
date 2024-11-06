@@ -13,32 +13,32 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.tinikling.com.databinding.FragmentSplashBinding
 
-
 class SplashFragment : Fragment() {
-    private lateinit var binding : FragmentSplashBinding
+    private lateinit var binding: FragmentSplashBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSplashBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.progressBar.progressTintList = ColorStateList.valueOf(Color.parseColor("#F8AC2B")) // Orange color
+
         Handler().postDelayed({
             if (onBoardingFinished()) {
-                findNavController().popBackStack(R.id.splashFragment, true)
+
                 findNavController().navigate(R.id.signInFragment)
             } else {
+
                 findNavController().navigate(R.id.mainFragment)
-                findNavController().popBackStack(R.id.splashFragment, true)
             }
         }, 3000)
     }
+
     private fun onBoardingFinished(): Boolean {
         val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
         return sharedPref.getBoolean("Finished", false)
